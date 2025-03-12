@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "database": [
+    {
+      "__schema__": "process",
+      "context": "localdb.disallowed",
+      "data": [
+        {
+          "identifier": ""
+        }
+      ]
+    }
+  ],
+  "encrypt": false,
+  "encryption": {
+    "key": "<SECRET_KEY>",
+    "iv": "<SECRET_IV>"
+  }
+}
