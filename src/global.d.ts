@@ -17,7 +17,7 @@ type Section = {
 
 type Group = {
   identifier: string;
-  sectionId: number;
+  sectionId: string;
   groupName: string;
   maxStudents: number;
   students?: Student[];

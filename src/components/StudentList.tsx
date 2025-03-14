@@ -16,7 +16,7 @@ export default function StudentList() {
   const students = createAsync(() => getStudents());
 
   return (
-    <ul style={{ display: "flex", gap: "1rem" }}>
+    <ul style={{ display: "flex", "flex-wrap": "wrap", gap: "1rem" }}>
       <ErrorBoundary fallback={<div>Failed to load students</div>}>
         <Suspense fallback={<div>Loading...</div>}>
           <For each={students()}>

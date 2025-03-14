@@ -28,7 +28,16 @@ export default function SectionList() {
   const submission = useSubmission(addSection);
   return (
     <main>
-      <form action={addSection} method="post" style={{ display: "flex", "flex-direction": "column", "align-items": "center", gap: "1rem" }}>
+      <form
+        action={addSection}
+        method="post"
+        style={{
+          display: "flex",
+          "flex-direction": "column",
+          "align-items": "center",
+          gap: "1rem",
+        }}
+      >
         <div>
           <label for="sectionName">Section Name</label>
           <input name="sectionName" />
@@ -52,14 +61,14 @@ export default function SectionList() {
           <input type="number" name="defaultMaxStudentsPerGroup" />
         </div>
         <button>Add Section</button>
+        <Show when={submission.pending}>
+          {submission.input?.[0]?.get("sectionName")?.toString()}
+        </Show>
       </form>
       <ul>
         <For each={sections()}>
           {(section) => <SectionWrapper content={section} />}
         </For>
-        <Show when={submission.pending}>
-          {submission.input?.[0]?.get("sectionName")?.toString()}
-        </Show>
       </ul>
     </main>
   );
