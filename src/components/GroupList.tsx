@@ -53,7 +53,7 @@ export default function GroupList(props: SectionWrapperProps) {
           {submission.input?.[0]?.get("groupName")?.toString()}
         </Show>
       </form>
-      <ul style={{ display: "flex", gap: "1rem", "flex-wrap": "wrap", "justify-content": "space-between" }}>
+      <ul style={{ display: "flex", gap: "1rem", "flex-wrap": "wrap", "justify-content": "flex-start" }}>
         <For each={groups()}>{(group) => <GroupWrapper content={group} />}</For>
       </ul>
     </main>

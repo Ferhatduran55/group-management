@@ -34,6 +34,23 @@ const addStudentToGroup = action(async (formData: FormData) => {
   return { success: true };
 }, "addStudentToGroup");
 
+const removeStudentFromGroup = action(async (formData: FormData) => {
+  "use server";
+  const groupId = formData.get("groupId")?.toString();
+  const studentId = Number(formData.get("studentId"));
+  const group = await Database.findOne("groups", { identifier: groupId });
+  if (!group || !studentId) return;
+  group.students = (group.students || []).filter(
+    (sid: number) => sid !== studentId
+  );
+  await Database.updateOne(
+    "groups",
+    { identifier: groupId },
+    { students: group.students }
+  );
+  return { success: true };
+}, "removeStudentFromGroup");
+
 const getGroupStudents = query(async (groupId: string) => {
   const group = await Database.findOne("groups", { identifier: groupId });
   if (!group?.students) return [];
@@ -65,21 +82,29 @@ export default function GroupWrapper(props: GroupWrapperProps) {
           {content.students?.length || 0}/{content.maxStudents}
         </span>
       </summary>
-      <ul
-        style={{
-          display: "flex",
-          "text-align": "left",
-          "flex-direction": "column",
-        }}
-      >
+      <ol class="group-students">
         <For each={groupStudents()}>
-          {(student, i) => (
+          {(student) => (
             <li>
+              <form
+                action={removeStudentFromGroup}
+                method="post"
+              >
+                <input
+                  type="hidden"
+                  name="groupId"
+                  value={content.identifier}
+                />
+                <input type="hidden" name="studentId" value={student.id} />
+                <button type="submit" class="remove-student">
+                  -
+                </button>
+              </form>
               {student.id} - {student.name} {student.surname}
             </li>
           )}
         </For>
-      </ul>
+      </ol>
       <Show when={(content.students?.length || 0) < content.maxStudents}>
         <Show when={sectionData()?.randomizeGroupAssignment}>
           <form action={addStudentToGroup} method="post">

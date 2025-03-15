@@ -1,5 +1,6 @@
 body {
-  font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
 }
 
 a {
@@ -26,6 +27,34 @@ p {
   max-width: 14rem;
   margin: 2rem auto;
   line-height: 1.35;
+}
+
+.group-students {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+}
+
+.group-students li {
+  display: list-item;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.group-students form {
+  outline: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.remove-student {
+  background-color: #a51010;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
 }
 
 @media (min-width: 480px) {
