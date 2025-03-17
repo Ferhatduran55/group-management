@@ -47,11 +47,10 @@ export async function GET({ params, request }: APIEvent) {
   const doc = new PDFDocument({ autoFirstPage: true });
   doc.registerFont("TurkishFont", "public/fonts/DejaVuSans.ttf");
   doc.font("TurkishFont");
-  doc.fontSize(18).text(`Section: ${section?.section_name || "Unknown"}`);
+  doc.fontSize(20).text(`${section?.section_name || "Unknown"}`);
   groups.forEach((g: any) => {
-    doc.moveDown().fontSize(14).text(`Group: ${g.group_name}`);
-    doc.moveDown().fontSize(12).text("Öğrenci Numarası - İsim Soyisim");
-    (g.students || []).forEach((sid: number) => {
+    doc.moveDown().fontSize(14).text(`${g.group_name}:`);
+    (g.students || []).forEach((sid: string) => {
       const student = allStudents.find((s: Student) => s.id === sid);
       if (student) {
         doc.text(`${student.id} - ${student.name} ${student.surname}`);

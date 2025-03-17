@@ -18,7 +18,7 @@ const getUnassignedStudents = query(async (sectionId: string) => {
 const addStudentToGroup = action(async (formData: FormData) => {
   "use server";
   const groupId = formData.get("groupId")?.toString();
-  const studentId = Number(formData.get("studentId"));
+  const studentId = formData.get("studentId")?.toString();
   if (!groupId || !studentId) return;
   const group = await Database.findOne("groups", { identifier: groupId });
   if (!group) return;
@@ -37,11 +37,11 @@ const addStudentToGroup = action(async (formData: FormData) => {
 const removeStudentFromGroup = action(async (formData: FormData) => {
   "use server";
   const groupId = formData.get("groupId")?.toString();
-  const studentId = Number(formData.get("studentId"));
+  const studentId = formData.get("studentId")?.toString();
   const group = await Database.findOne("groups", { identifier: groupId });
   if (!group || !studentId) return;
   group.students = (group.students || []).filter(
-    (sid: number) => sid !== studentId
+    (sid: string) => sid !== studentId
   );
   await Database.updateOne(
     "groups",
@@ -55,7 +55,7 @@ const getGroupStudents = query(async (groupId: string) => {
   const group = await Database.findOne("groups", { identifier: groupId });
   if (!group?.students) return [];
   const allStudents = await Database.findAllIn("students");
-  return allStudents.filter((s: Student) => group.students.includes(s.id));
+  return allStudents.filter((s: Student) => (group.students || []).includes(s.id));
 }, "groupStudents");
 
 export default function GroupWrapper(props: GroupWrapperProps) {
